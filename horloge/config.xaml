@@ -28,18 +28,19 @@
         <Slider x:Name="slider" HorizontalAlignment="Left" Margin="72,232,0,0" VerticalAlignment="Top" Width="338" Height="25" Maximum="100" Value="100" ValueChanged="slider_ValueChanged"/>
         <Label x:Name="optextLabel" Content="透明度" HorizontalAlignment="Left" Margin="21,232,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.089,0.384"/>
         <Label x:Name="opLabel" Content="100" HorizontalAlignment="Left" Margin="415,232,0,0" VerticalAlignment="Top" Loaded="opLabel_Loaded" RenderTransformOrigin="0.605,0.393"/>
-        <CheckBox x:Name="enableDragBox" Content="ドラッグを有効にする" HorizontalAlignment="Left" Margin="21,47,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.506,1.241"/>
-        <CheckBox x:Name="disableBackgroundBox" Content="背景を表示しない" HorizontalAlignment="Left" Margin="21,67,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="backgroundColorButton" Content="背景色変更" HorizontalAlignment="Left" Margin="21,180,0,0" VerticalAlignment="Top" Width="106"/>
-        <Button x:Name="fontColorButton" Content="文字色変更" HorizontalAlignment="Left" Margin="21,156,0,0" VerticalAlignment="Top" Width="106"/>
-        <ComboBox x:Name="fontMenu" HorizontalAlignment="Left" Margin="64,87,0,0" VerticalAlignment="Top" Width="177" ItemsSource="{Binding FontList}" Height="25" Padding="0" DropDownClosed="fontMenu_DropDownClosed" >
+        <CheckBox x:Name="enableDragBox" Content="ドラッグを無効にする" HorizontalAlignment="Left" Margin="21,47,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.506,1.241" Click="enableDragBox_Click"/>
+        <CheckBox x:Name="disableBackgroundBox" Content="背景を表示しない" HorizontalAlignment="Left" Margin="21,67,0,0" VerticalAlignment="Top" Click="disableBackgroundBox_Click"/>
+        <Button x:Name="backgroundColorButton" Content="背景色変更" HorizontalAlignment="Left" Margin="21,180,0,0" VerticalAlignment="Top" Width="106" Click="backgroundColorButton_Click"/>
+        <Button x:Name="fontColorButton" Content="文字色変更" HorizontalAlignment="Left" Margin="21,156,0,0" VerticalAlignment="Top" Width="106" Click="fontColorButton_Click"/>
+        <ComboBox x:Name="fontMenu" HorizontalAlignment="Left" Margin="64,112,0,0" VerticalAlignment="Top" Width="177" ItemsSource="{Binding FontList}" Height="25" Padding="0" DropDownClosed="fontMenu_DropDownClosed" >
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <Label FontSize="10" Content="{Binding}" FontFamily="{Binding}"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <Label x:Name="label" Content="フォント" HorizontalAlignment="Left" Margin="21,87,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label" Content="フォント" HorizontalAlignment="Left" Margin="21,112,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="enableTopBox" Content="常に最前面" HorizontalAlignment="Left" Margin="21,87,0,0" VerticalAlignment="Top" Width="115" Click="enableTopBox_Click"/>
 
     </Grid>
 </Window>

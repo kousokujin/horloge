@@ -24,7 +24,10 @@ namespace horloge
         private NotifyIconWrapper notifyIcon;
 
         public bool movelook = false;      //trueだとウィンドウ移動不可
+        public bool backgroundEnable = true;      //falseだと背景透過
 
+        public Brush backColor; //背景色
+        public Brush fontColor; //フォントカラー
 
         public MainWindow()
         {
@@ -50,11 +53,38 @@ namespace horloge
             dataLabel.FontFamily = new FontFamily(clockLabel.FontFamily.ToString());
 
             Size textSize = MeasureString(clockLabel.Content.ToString(), clockLabel.FontSize, clockLabel.FontFamily.ToString());
-            Size dataLabel_height = MeasureString(dataLabel.Content.ToString(), dataLabel.FontSize, dataLabel.FontFamily.ToString());
-            clockLabel.Width = textSize.Width+5;
-            clockLabel.Height = textSize.Height;
-            secLabel.Margin = new Thickness(clockLabel.Width, clockLabel.Margin.Top, 0, 0);
+            Size dataSize = MeasureString(dataLabel.Content.ToString(), dataLabel.FontSize, dataLabel.FontFamily.ToString());
 
+            clockLabel.Width = textSize.Width+5;
+            clockLabel.Height = textSize.Height+5;
+
+            dataLabel.Width = clockLabel.Width + secLabel.Width + 5;
+            dataLabel.Height = dataSize.Height;
+
+            clockLabel.Margin = new Thickness(0, dataSize.Height,0,0);
+            secLabel.Margin = new Thickness(clockLabel.Width, clockLabel.Margin.Top+5, 0, 0);
+
+            this.Width = clockLabel.Width + secLabel.Width;
+            this.Height = clockLabel.Height + dataLabel.Height;
+
+            clockLabel.Opacity = this.Opacity;
+            secLabel.Opacity = this.Opacity;
+            dataLabel.Opacity = this.Opacity;
+
+            if(backgroundEnable == true)
+            {
+                this.Background = backColor;
+                System.Console.WriteLine("background_enable");
+            }
+            else
+            {
+                this.Background = Brushes.Transparent;
+                System.Console.WriteLine("background_disable");
+            }
+
+            clockLabel.Foreground = fontColor;
+            secLabel.Foreground = fontColor;
+            dataLabel.Foreground = fontColor;
         }
 
         private void loadNowtime()
@@ -112,6 +142,8 @@ namespace horloge
 
         private void clockWindow_Loaded(object sender, RoutedEventArgs e)   //メインウィンドウの描画イベント
         {
+            backColor = Brushes.White;
+            fontColor = clockLabel.Foreground;
             drawLabel();
             start_tick();
         }
