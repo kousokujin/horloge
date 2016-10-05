@@ -29,6 +29,8 @@ namespace horloge
         public Brush backColor; //背景色
         public Brush fontColor; //フォントカラー
 
+        public int fontSizeMode = 2;    //フォントサイズ(大中小)
+
         public MainWindow()
         {
             InitializeComponent();
@@ -49,6 +51,33 @@ namespace horloge
         {
             loadNowtime();
 
+            switch(fontSizeMode)
+            {
+                case 0:
+                    dataLabel.FontSize = 18;
+                    clockLabel.FontSize = 30;
+                    secLabel.FontSize = 20;
+                    break;
+
+                case 1:
+                    dataLabel.FontSize = 25;
+                    clockLabel.FontSize = 45;
+                    secLabel.FontSize = 30;
+                    break;
+
+                case 2:
+                    dataLabel.FontSize = 32;
+                    clockLabel.FontSize = 54;
+                    secLabel.FontSize = 38;
+                    break;
+
+                default:
+                    dataLabel.FontSize = 25;
+                    clockLabel.FontSize = 45;
+                    secLabel.FontSize = 30;
+                    break;
+            }
+
             secLabel.FontFamily = new FontFamily(clockLabel.FontFamily.ToString());
             dataLabel.FontFamily = new FontFamily(clockLabel.FontFamily.ToString());
 
@@ -64,7 +93,13 @@ namespace horloge
             clockLabel.Margin = new Thickness(0, dataSize.Height,0,0);
             secLabel.Margin = new Thickness(clockLabel.Width, clockLabel.Margin.Top+5, 0, 0);
 
-            this.Width = clockLabel.Width + secLabel.Width;
+            if (fontSizeMode == 2)
+            {
+                this.Width = clockLabel.Width + secLabel.Width+5;
+            }else
+            {
+                this.Width = clockLabel.Width + secLabel.Width;
+            }
             this.Height = clockLabel.Height + dataLabel.Height;
 
             clockLabel.Opacity = this.Opacity;
