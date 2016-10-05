@@ -32,6 +32,7 @@ namespace horloge
         Brush backColor;    //背景色
         string fontname;    //フォント
         Brush fontColor; //フォントカラー
+        int fontSizeMode;   //フォントサイズ
 
         public config(MainWindow mainWindow)
         {
@@ -46,10 +47,29 @@ namespace horloge
             fontname = window.clockLabel.FontFamily.ToString();
             backColor = window.backColor;
             fontColor = window.fontColor;
+            fontSizeMode = window.fontSizeMode;
 
             this.Language = XmlLanguage.GetLanguage(Thread.CurrentThread.CurrentCulture.Name);
             this.DataContext = new MainWindowViewModel();
 
+        }
+
+        private void preViewDraw()
+        {
+            previewLabel.Content = window.clockLabel.Content;
+            if (backgroundEnable == true)
+            {
+                previewLabel.Background = backColor;
+            }
+            else
+            {
+                previewLabel.Background = Brushes.Transparent;
+            }
+
+            previewLabel.Foreground = fontColor;
+            previewLabel.Opacity = opt;
+
+            previewLabel.FontFamily = new FontFamily(fontname);
         }
 
         //以下イベント
@@ -74,17 +94,43 @@ namespace horloge
             //背景
             disableBackgroundBox.IsChecked = !backgroundEnable;
 
+            //フォントサイズ
+            switch (fontSizeMode)
+            {
+                case 0:
+                    radioSmall.IsChecked = true;
+                    break;
+                case 1:
+                    radioNomal.IsChecked = true;
+                    break;
+                case 2:
+                    radioLarge.IsChecked = true;
+                    break;
+                default:
+                    break;
+            }
+
+            //プレビューラベル
+            preViewDraw();
+
         }
 
 
         private void slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)   //透明度スライダー
         {
-            opt = slider.Value/100;
+            opt = slider.Value / 100;
 
             if (opLabel != null)
             {
                 opLabel.Content = string.Format("{0}", (int)slider.Value);
             }
+
+            if (previewLabel != null)
+            {
+                previewLabel.Opacity = opt;
+                preViewDraw();
+            }
+
         }
 
         private void okButton_Click(object sender, RoutedEventArgs e)   //OKボタン
@@ -98,10 +144,10 @@ namespace horloge
 
             window.fontColor = fontColor;
             window.backColor = backColor;
+            window.fontSizeMode = fontSizeMode;
 
             window.drawLabel();
 
-            System.Console.WriteLine("backEnable:{0}",window.backgroundEnable);
 
             this.Visibility = Visibility.Hidden;
         }
@@ -116,10 +162,10 @@ namespace horloge
 
             window.fontColor = fontColor;
             window.backColor = backColor;
+            window.fontSizeMode = fontSizeMode;
 
             window.drawLabel();
 
-            System.Console.WriteLine("backEnable:{0}", window.backgroundEnable);
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -135,13 +181,14 @@ namespace horloge
         private void fontMenu_DropDownClosed(object sender, EventArgs e)    //フォントメニューを閉じた時
         {
             fontname = fontMenu.Text;
+            preViewDraw();
         }
 
         private void enableDragBox_Click(object sender, RoutedEventArgs e)  //移動可能チェックボックス
         {
-            if(enableDragBox.IsChecked != null )
+            if (enableDragBox.IsChecked != null)
             {
-                if((bool)enableDragBox.IsChecked == true)
+                if ((bool)enableDragBox.IsChecked == true)
                 {
                     movelook = true;
                 }
@@ -173,6 +220,8 @@ namespace horloge
             {
                 backgroundEnable = true;
             }
+
+            preViewDraw();
         }
 
         private void backgroundColorButton_Click(object sender, RoutedEventArgs e)  //背景変更ボタン
@@ -181,8 +230,10 @@ namespace horloge
             if (cd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 Color color = Color.FromArgb(cd.Color.A, cd.Color.R, cd.Color.G, cd.Color.B);
-                backColor= new SolidColorBrush(color);
+                backColor = new SolidColorBrush(color);
             }
+
+            preViewDraw();
         }
 
         private void fontColorButton_Click(object sender, RoutedEventArgs e)    //フォントカラー変更ボタン
@@ -193,6 +244,8 @@ namespace horloge
                 Color color = Color.FromArgb(cd.Color.A, cd.Color.R, cd.Color.G, cd.Color.B);
                 fontColor = new SolidColorBrush(color);
             }
+
+            preViewDraw();
         }
 
         private void enableTopBox_Click(object sender, RoutedEventArgs e)
@@ -213,6 +266,21 @@ namespace horloge
                 topEnable = false;
             }
         }
+
+        private void radioSmall_Checked(object sender, RoutedEventArgs e)   //フォント小
+        {
+            fontSizeMode = 0;
+        }
+
+        private void radioNomal_Checked(object sender, RoutedEventArgs e)   //フォント中
+        {
+            fontSizeMode = 1;
+        }
+
+        private void radioLarge_Checked(object sender, RoutedEventArgs e)   //フォント大
+        {
+            fontSizeMode = 2;
+        }
     }
 
     class MainWindowViewModel
@@ -224,4 +292,5 @@ namespace horloge
             this.FontList = Fonts.SystemFontFamilies;
         }
     }
+
 }

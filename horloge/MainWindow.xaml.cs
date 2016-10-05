@@ -29,7 +29,7 @@ namespace horloge
         public Brush backColor; //背景色
         public Brush fontColor; //フォントカラー
 
-        public int fontSizeMode = 2;    //フォントサイズ(大中小)
+        public int fontSizeMode = 1;    //フォントサイズ(大中小)
 
         public MainWindow()
         {
@@ -93,6 +93,7 @@ namespace horloge
             clockLabel.Margin = new Thickness(0, dataSize.Height,0,0);
             secLabel.Margin = new Thickness(clockLabel.Width, clockLabel.Margin.Top+5, 0, 0);
 
+            /*
             if (fontSizeMode == 2)
             {
                 this.Width = clockLabel.Width + secLabel.Width+5;
@@ -100,6 +101,16 @@ namespace horloge
             {
                 this.Width = clockLabel.Width + secLabel.Width;
             }
+            */
+
+            if(dataLabel.Width < clockLabel.Width + secLabel.Width)
+            {
+                this.Width = clockLabel.Width + secLabel.Width;
+            }else
+            {
+                this.Width = dataLabel.Width;
+            }
+
             this.Height = clockLabel.Height + dataLabel.Height;
 
             clockLabel.Opacity = this.Opacity;
@@ -109,12 +120,10 @@ namespace horloge
             if(backgroundEnable == true)
             {
                 this.Background = backColor;
-                System.Console.WriteLine("background_enable");
             }
             else
             {
                 this.Background = Brushes.Transparent;
-                System.Console.WriteLine("background_disable");
             }
 
             clockLabel.Foreground = fontColor;
