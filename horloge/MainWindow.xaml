@@ -8,9 +8,9 @@
         Title="horloge" MouseLeftButtonDown="clockWindow_MouseLeftButtonDown" VerticalAlignment="Top" HorizontalAlignment="Left" Loaded="clockWindow_Loaded" Height="90" WindowStyle="None" ResizeMode="NoResize" Width="186" AllowsTransparency="True">
     <Grid x:Name="clockGrid">
 
-        <Label x:Name="dataLabel" Content="2016/10/01" HorizontalAlignment="Left" VerticalAlignment="Top"  Padding="0" Margin="0" FontSize="25" Width="186"/>
-        <Label x:Name="secLabel" Content="50" HorizontalAlignment="Left" Padding="0" FontSize="30" Margin="136,32,0,24" RenderTransformOrigin="-1.325,0.125" Width="46"/>
-        <Label x:Name="clockLabel" Content="20:50" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="0,0,5,0" FontSize="45" Margin="0,32,0,0" Width="136"/>
+        <Label Background="Transparent" x:Name="dataLabel" Content="2016/10/01" HorizontalAlignment="Left" VerticalAlignment="Top"  Padding="0" Margin="0" FontSize="25" Width="186"/>
+        <Label Background="Transparent" x:Name="secLabel" Content="50" HorizontalAlignment="Left" Padding="0" FontSize="30" Margin="136,32,0,24" RenderTransformOrigin="-1.325,0.125" Width="46"/>
+        <Label Background="Transparent" x:Name="clockLabel" Content="20:50" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="0,0,5,0" FontSize="45" Margin="0,32,0,0" Width="136"/>
 
     </Grid>
 </Window>

@@ -4,9 +4,54 @@
              xmlns:local="clr-namespace:horloge"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <SolidColorBrush x:Key="background_Color" Color="#252526"/>
+        <SolidColorBrush x:Key="font_Color" Color="#FFFFFF" />
         <Style x:Key="CaptionButtonStyleKey" TargetType="{x:Type Button}">
             <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
             <Setter Property="FontFamily" Value="Marlett"/>
+        </Style>
+        <!--
+            ボタン
+        -->
+        <!-- 通常時のボタンの色 -->
+        <SolidColorBrush x:Key="NormalButtonBrush" Color="#FFFFFF"/>
+        <!-- 通常時のボタンの背景色 -->
+        <SolidColorBrush x:Key="NormalBackgroundBrush" Color="#252526"/>
+        <!-- マウスオーバー時のボタンの色 -->
+        <SolidColorBrush x:Key="HoverButtonBrush" Color="#ffffff"/>
+        <!-- マウスオーバー時のボタンの背景色 -->
+        <SolidColorBrush x:Key="HoverBackgroundBrush" Color="#66ffffff"/>
+        <!-- カスタムボタンのスタイル -->
+        <Style x:Key="HoverButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="{StaticResource NormalButtonBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="HoverButtonBorder" BorderThickness="1" BorderBrush="{StaticResource NormalButtonBrush}" Background="{StaticResource NormalBackgroundBrush}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- マウスオーバー -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="HoverButtonBorder" Property="BorderBrush" Value="{StaticResource HoverButtonBrush}" />
+                                <Setter TargetName="HoverButtonBorder" Property="Background" Value="{StaticResource HoverBackgroundBrush}" />
+                                <Setter Property="Foreground" Value="{StaticResource HoverButtonBrush}"/>
+                            </Trigger>
+                            <!-- ボタンを押した時に、背景色を透過 -->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="HoverButtonBorder" Property="Background" Value="{StaticResource NormalBackgroundBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!--コンボボックス-->
+        <Style x:Key="defaultComboBox" TargetType="{x:Type ComboBox}">
+            <Setter Property="Background" Value="#444444"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#888888"/>
         </Style>
     </Application.Resources>
 </Application>
