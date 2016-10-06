@@ -36,6 +36,8 @@ namespace horloge
         {
             InitializeComponent();
             this.notifyIcon = new NotifyIconWrapper(this);
+
+            loadsetting();
         }
 
         public double get_opt() //透明度取得
@@ -198,9 +200,30 @@ namespace horloge
 
                 movelook = clockData.movelook;
                 backgroundEnable = clockData.backgroundEnable;
+                this.Topmost = clockData.topEnable;
 
-                //書きかけ
+                backColor = Convertbrash(clockData.backColor); //背景色
+                fontColor = Convertbrash(clockData.fontColor); //フォントカラー
+                clockLabel.FontFamily = new FontFamily(clockData.fontname);
+                this.Opacity = clockData.opt;
+                fontSizeMode = clockData.fontSizeMode;
+
+                this.Top = clockData.p.Y;
+                this.Left = clockData.p.X;
             }
+            else
+            {
+                backColor = Brushes.White;
+                fontColor = Brushes.Black;
+            }
+        }
+
+        private Brush Convertbrash(my_color c)
+        {
+            Color memofontcolor = Color.FromArgb(c.A, c.R, c.G, c.B);
+            Brush output = new SolidColorBrush(memofontcolor);
+
+            return output;
         }
 
         private save loadfile()
@@ -239,10 +262,15 @@ namespace horloge
 
         private void clockWindow_Loaded(object sender, RoutedEventArgs e)   //メインウィンドウの描画イベント
         {
-            backColor = Brushes.White;
-            fontColor = clockLabel.Foreground;
+            //backColor = Brushes.White;
+            //fontColor = clockLabel.Foreground;
             drawLabel();
             start_tick();
+        }
+
+        private void clockWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            saveClock();
         }
     }
 
@@ -258,6 +286,8 @@ namespace horloge
         public my_color fontColor; //フォントカラー
         public int fontSizeMode;   //フォントサイズ
 
+        public Point p; //座標
+
         public void writeSave(MainWindow mw)
         {
             movelook = mw.movelook;
@@ -268,6 +298,8 @@ namespace horloge
             fontColor = new my_color(mw.fontColor);
             fontSizeMode = mw.fontSizeMode;
             fontname = mw.clockLabel.FontFamily.ToString();
+
+            p = mw.PointToScreen(new Point(0.0d, 0.0d));
         }
     }
 
