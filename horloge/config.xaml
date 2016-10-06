@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:horloge"
         mc:Ignorable="d"
-        Title="config" Height="269.043" Width="422.264" ResizeMode="NoResize" WindowStyle="None" BorderThickness="1" BorderBrush="#888888" Background="{StaticResource background_Color}">
+        Title="horlogeの設定" Height="269.043" Width="422.264" ResizeMode="NoResize" WindowStyle="None" BorderThickness="1" BorderBrush="#888888" Background="{StaticResource background_Color}" Icon="Resources/horlogeIcon.ico">
 
 
     <WindowChrome.WindowChrome>

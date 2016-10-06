@@ -32,8 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NotifyIconWrapper));
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.notifyMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStrinMenuItem_Exit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripConfig = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrinMenuItem_Exit = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyMenu.SuspendLayout();
             // 
             // notifyIcon
@@ -51,17 +51,17 @@
             this.notifyMenu.Name = "notifyMenu";
             this.notifyMenu.Size = new System.Drawing.Size(99, 48);
             // 
-            // toolStrinMenuItem_Exit
-            // 
-            this.toolStrinMenuItem_Exit.Name = "toolStrinMenuItem_Exit";
-            this.toolStrinMenuItem_Exit.Size = new System.Drawing.Size(98, 22);
-            this.toolStrinMenuItem_Exit.Text = "終了";
-            // 
             // toolStripConfig
             // 
             this.toolStripConfig.Name = "toolStripConfig";
             this.toolStripConfig.Size = new System.Drawing.Size(98, 22);
             this.toolStripConfig.Text = "設定";
+            // 
+            // toolStrinMenuItem_Exit
+            // 
+            this.toolStrinMenuItem_Exit.Name = "toolStrinMenuItem_Exit";
+            this.toolStrinMenuItem_Exit.Size = new System.Drawing.Size(98, 22);
+            this.toolStrinMenuItem_Exit.Text = "終了";
             this.notifyMenu.ResumeLayout(false);
 
         }
