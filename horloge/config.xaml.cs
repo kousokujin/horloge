@@ -34,6 +34,8 @@ namespace horloge
         Brush fontColor; //フォントカラー
         int fontSizeMode;   //フォントサイズ
 
+        about aboutThis; //このアプリケーションについてのウィンドウ
+
         public config(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -280,6 +282,24 @@ namespace horloge
         private void radioLarge_Checked(object sender, RoutedEventArgs e)   //フォント大
         {
             fontSizeMode = 2;
+        }
+
+        private void versionButton_Click(object sender, RoutedEventArgs e)  //このアプリケーションについてボタン
+        {
+            if (aboutThis != null)
+            {
+                if (aboutThis.Visibility == Visibility.Hidden)
+                {
+                    aboutThis.Visibility = Visibility.Visible;
+                }
+
+                aboutThis.Focus();
+            }
+            else
+            {
+                aboutThis = new about();
+                aboutThis.Show();
+            }
         }
     }
 
