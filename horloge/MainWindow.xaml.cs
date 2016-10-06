@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Serialization;
 
 namespace horloge
 {
@@ -129,6 +130,8 @@ namespace horloge
             clockLabel.Foreground = fontColor;
             secLabel.Foreground = fontColor;
             dataLabel.Foreground = fontColor;
+
+            saveClock();
         }
 
         private void loadNowtime()
@@ -166,6 +169,56 @@ namespace horloge
             return new Size(ft.Width, ft.Height);
         }
 
+        private void saveClock()    //設定保存
+        {
+            save saveData = new save();
+            saveData.writeSave(this);
+            string filename = @"config/horlogeconfig.conf";
+
+            if (System.IO.File.Exists("config") == false)
+            {
+                System.IO.Directory.CreateDirectory(@"config");
+            }
+
+            XmlSerializer serializer = new XmlSerializer(typeof(save));
+            //ファイルを開く（UTF-8 BOM無し）
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(
+            filename, false, new System.Text.UTF8Encoding(false));
+
+            serializer.Serialize(sw, saveData);
+            //閉じる
+            sw.Close();
+        }
+
+        private void loadsetting()  //設定読み込み
+        {
+            if(System.IO.File.Exists(@"config/horlogeconfig.conf") == true)
+            {
+                save clockData = loadfile();
+
+                movelook = clockData.movelook;
+                backgroundEnable = clockData.backgroundEnable;
+
+                //書きかけ
+            }
+        }
+
+        private save loadfile()
+        {
+            string filename = @"config/horlogeconfig.conf";
+            //＜XMLファイルから読み込む＞
+            //XmlSerializerオブジェクトの作成
+            System.Xml.Serialization.XmlSerializer serializer2 = new System.Xml.Serialization.XmlSerializer(typeof(save));
+            //ファイルを開く
+            System.IO.StreamReader sr = new System.IO.StreamReader(filename, new System.Text.UTF8Encoding(false));
+            //XMLファイルから読み込み、逆シリアル化する
+            save savefile = (save)serializer2.Deserialize(sr);
+            //閉じる
+            sr.Close();
+
+            return savefile;
+        }
+
         //以下イベント
 
         private void clockWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) //ウィンドウを右クリックした時
@@ -190,6 +243,49 @@ namespace horloge
             fontColor = clockLabel.Foreground;
             drawLabel();
             start_tick();
+        }
+    }
+
+    public class save
+    {
+        public bool movelook;      //trueだとウィンドウ移動不可
+        public bool backgroundEnable;
+        public bool topEnable;   //trueだと常に最前面
+
+        public double opt; //透明度
+        public my_color backColor;    //背景色
+        public string fontname;    //フォント
+        public my_color fontColor; //フォントカラー
+        public int fontSizeMode;   //フォントサイズ
+
+        public void writeSave(MainWindow mw)
+        {
+            movelook = mw.movelook;
+            backgroundEnable = mw.backgroundEnable;
+            topEnable = mw.Topmost;
+            opt = mw.Opacity;
+            backColor = new my_color(mw.backColor);
+            fontColor = new my_color(mw.fontColor);
+            fontSizeMode = mw.fontSizeMode;
+            fontname = mw.clockLabel.FontFamily.ToString();
+        }
+    }
+
+    public struct my_color
+    {
+        public byte A;
+        public byte R;
+        public byte G;
+        public byte B;
+
+        public my_color(Brush c)
+        {
+            SolidColorBrush scb = c as SolidColorBrush;
+
+            A = scb.Color.A;
+            R = scb.Color.R;
+            G = scb.Color.G;
+            B = scb.Color.B;
         }
     }
 }
