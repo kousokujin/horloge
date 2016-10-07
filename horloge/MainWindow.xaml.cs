@@ -32,10 +32,16 @@ namespace horloge
 
         public int fontSizeMode = 1;    //フォントサイズ(大中小)
 
+        public timeCount time;
+        public bool enableNTP = false;  //NTPサーバ
+
         public MainWindow()
         {
             InitializeComponent();
             this.notifyIcon = new NotifyIconWrapper(this);
+
+            time = new timeCount();
+            time.NTP_connection("time.windows.com", 123, 60);
 
             loadsetting();
         }
@@ -138,7 +144,7 @@ namespace horloge
 
         private void loadNowtime()
         {
-            DateTime nowtime = DateTime.Now;
+            DateTime nowtime = time.getTime();
 
             clockLabel.Content = nowtime.ToString("HH:mm");
             secLabel.Content = nowtime.ToString("ss");

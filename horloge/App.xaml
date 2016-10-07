@@ -21,6 +21,8 @@
         <SolidColorBrush x:Key="HoverButtonBrush" Color="#ffffff"/>
         <!-- マウスオーバー時のボタンの背景色 -->
         <SolidColorBrush x:Key="HoverBackgroundBrush" Color="#66ffffff"/>
+        <!-- 利用不可のボタンの色 -->
+        <SolidColorBrush x:Key="disableButtonBrush" Color="#777777"/>
         <!-- カスタムボタンのスタイル -->
         <Style x:Key="HoverButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Foreground" Value="{StaticResource NormalButtonBrush}"/>
@@ -40,6 +42,11 @@
                             <!-- ボタンを押した時に、背景色を透過 -->
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="HoverButtonBorder" Property="Background" Value="{StaticResource NormalBackgroundBrush}" />
+                            </Trigger>
+                            <!-- ボタンが押せない時-->
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{StaticResource disableButtonBrush}"/>
+                                <Setter TargetName="HoverButtonBorder" Property="BorderBrush" Value="{StaticResource disableButtonBrush}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

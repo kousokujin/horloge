@@ -35,6 +35,7 @@ namespace horloge
         int fontSizeMode;   //フォントサイズ
 
         about aboutThis; //このアプリケーションについてのウィンドウ
+        NTPconf confWindow; //インターネット時刻のウィンドウ
 
         public config(MainWindow mainWindow)
         {
@@ -299,6 +300,24 @@ namespace horloge
             {
                 aboutThis = new about();
                 aboutThis.Show();
+            }
+        }
+
+        private void ntpButton_Click(object sender, RoutedEventArgs e)  //インターネット時刻
+        {
+            if (confWindow != null)
+            {
+                if (confWindow.Visibility == Visibility.Hidden)
+                {
+                    confWindow.Visibility = Visibility.Visible;
+                }
+
+                confWindow.Focus();
+            }
+            else
+            {
+                confWindow = new NTPconf();
+                confWindow.Show();
             }
         }
     }
