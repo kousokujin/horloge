@@ -11,6 +11,9 @@
 * Windows8.1以降
 * .NET FrameWork 4.5.2以降
 
+## ダウンロード
+[ダウンロード](https://github.com/kousokujin/horloge/releases/tag/1.0.0.0)
+
 ## ライセンス
 Copyright (c) 2016 kousokujin  
 Released under the [MIT license][]
