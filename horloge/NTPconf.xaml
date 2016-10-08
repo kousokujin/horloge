@@ -1,4 +1,4 @@
-﻿<Window x:Class="horloge.NTPconf"
+﻿<Window x:Name="ntpwindow" x:Class="horloge.NTPconf"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:horloge"
         mc:Ignorable="d"
         Title="NTPconf" Height="185.417" Width="395.833" WindowStyle="None" ResizeMode="NoResize"
-        BorderBrush="#888888" Background="{StaticResource background_Color}" Icon="Resources/horlogeIcon.ico" BorderThickness="1">
+        BorderBrush="#888888" Background="{StaticResource background_Color}" Icon="Resources/horlogeIcon.ico" BorderThickness="1" Loaded="ntpwindow_Loaded">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="{x:Static SystemParameters.CaptionHeight}"
@@ -21,16 +21,19 @@
             <Button x:Name="closeButton" Content="r" Style="{DynamicResource CaptionButtonStyleKey}" Background="#252526" Foreground="#AAAAAA" BorderBrush="Transparent" FontSize="15" Click="closeButton_Click"/>
         </StackPanel>
         <CheckBox x:Name="enableNTPCheck" Content="インターネットから時刻を取得する" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Foreground="{StaticResource font_Color}" Click="enableNTPCheck_Click"/>
-        <ComboBox x:Name="serverCombo" HorizontalAlignment="Left" Margin="66,68,0,0" VerticalAlignment="Top" Width="197">
+        <ComboBox x:Name="serverCombo" HorizontalAlignment="Left" Margin="66,68,0,0" VerticalAlignment="Top" Width="197" DropDownClosed="serverCombo_DropDownClosed">
             <ComboBoxItem Content="time.windows.com"/>
             <ComboBoxItem Content="time.nist.gov"/>
             <ComboBoxItem Content="time-nw.nist.gov"/>
+            <ComboBoxItem Content="time-a.nist.gov"/>
+            <ComboBoxItem Content="time-b.nist.gov"/>
+            <ComboBoxItem Content="ntp.nict.jp"/>
         </ComboBox>
         <Label x:Name="label" Content="サーバ" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Foreground="{StaticResource font_Color}"/>
-        <Button x:Name="getTimeButton" Content="今すぐ取得" HorizontalAlignment="Left" Margin="283,68,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource HoverButtonStyle}"/>
+        <Button x:Name="getTimeButton" Content="今すぐ取得" HorizontalAlignment="Left" Margin="283,68,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource HoverButtonStyle}" Click="getTimeButton_Click"/>
         <Label x:Name="label2" Content="前回の取得:" HorizontalAlignment="Left" Margin="10,108,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.821,-0.402" Width="72" Foreground="{StaticResource font_Color}"/>
         <Label x:Name="lastGetlabel" Content="取得していません" HorizontalAlignment="Left" Margin="87,108,0,0" VerticalAlignment="Top" Width="189" Foreground="{StaticResource font_Color}"/>
         <Button x:Name="cancelButton" Content="キャンセル" HorizontalAlignment="Left" Margin="229,155,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource HoverButtonStyle}" Click="cancelButton_Click"/>
-        <Button x:Name="OK_button" Content="OK" HorizontalAlignment="Left" Margin="309,155,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.614,1.414" Style="{StaticResource HoverButtonStyle}"/>
+        <Button x:Name="OK_button" Content="OK" HorizontalAlignment="Left" Margin="309,155,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.614,1.414" Style="{StaticResource HoverButtonStyle}" Click="OK_button_Click"/>
     </Grid>
 </Window>

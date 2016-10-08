@@ -33,7 +33,8 @@ namespace horloge
         public int fontSizeMode = 1;    //フォントサイズ(大中小)
 
         public timeCount time;
-        public bool enableNTP = false;  //NTPサーバ
+
+        //public bool enableNTP = false;  //NTPサーバ
 
         public MainWindow()
         {
@@ -66,29 +67,34 @@ namespace horloge
                     dataLabel.FontSize = 18;
                     clockLabel.FontSize = 30;
                     secLabel.FontSize = 20;
+                    ntpLabel.FontSize = 8;
                     break;
 
                 case 1:
                     dataLabel.FontSize = 25;
                     clockLabel.FontSize = 45;
                     secLabel.FontSize = 30;
+                    ntpLabel.FontSize = 12;
                     break;
 
                 case 2:
                     dataLabel.FontSize = 32;
                     clockLabel.FontSize = 54;
                     secLabel.FontSize = 38;
+                    ntpLabel.FontSize = 16;
                     break;
 
                 default:
                     dataLabel.FontSize = 25;
                     clockLabel.FontSize = 45;
                     secLabel.FontSize = 30;
+                    ntpLabel.FontSize = 12;
                     break;
             }
 
             secLabel.FontFamily = new FontFamily(clockLabel.FontFamily.ToString());
             dataLabel.FontFamily = new FontFamily(clockLabel.FontFamily.ToString());
+            ntpLabel.FontFamily = new FontFamily(clockLabel.FontFamily.ToString());
 
             Size textSize = MeasureString(clockLabel.Content.ToString(), clockLabel.FontSize, clockLabel.FontFamily.ToString());
             Size dataSize = MeasureString(dataLabel.Content.ToString(), dataLabel.FontSize, dataLabel.FontFamily.ToString());
@@ -101,6 +107,22 @@ namespace horloge
 
             clockLabel.Margin = new Thickness(0, dataSize.Height,0,0);
             secLabel.Margin = new Thickness(clockLabel.Width, clockLabel.Margin.Top+5, 0, 0);
+
+            if(time.getEnableNTP() == true)
+            {
+                ntpLabel.Visibility = Visibility.Visible;
+                Size clockSize = MeasureString(clockLabel.Content.ToString(), clockLabel.FontSize, clockLabel.FontFamily.ToString());
+                
+                Size ntpSize = MeasureString(ntpLabel.Content.ToString(), ntpLabel.FontSize, ntpLabel.FontFamily.ToString());
+
+                ntpLabel.Width = clockLabel.Width;
+                ntpLabel.Height = ntpSize.Height;
+
+                ntpLabel.Margin = new Thickness(0, clockLabel.Margin.Top+clockSize.Height-5, 0, 0);
+            }else
+            {
+                ntpLabel.Visibility = Visibility.Hidden;
+            }
 
             /*
             if (fontSizeMode == 2)
@@ -120,7 +142,15 @@ namespace horloge
                 this.Width = dataLabel.Width;
             }
 
-            this.Height = clockLabel.Height + dataLabel.Height;
+            if (time.getEnableNTP() == true)
+            {
+                this.Height = clockLabel.Height + dataLabel.Height + ntpLabel.Height;
+                Console.WriteLine("NTPLABEL");
+            }
+            else
+            {
+                this.Height = clockLabel.Height + dataLabel.Height;
+            }
 
             clockLabel.Opacity = this.Opacity;
             secLabel.Opacity = this.Opacity;
@@ -138,6 +168,7 @@ namespace horloge
             clockLabel.Foreground = fontColor;
             secLabel.Foreground = fontColor;
             dataLabel.Foreground = fontColor;
+            ntpLabel.Foreground = fontColor;
 
             saveClock();
         }
@@ -167,7 +198,7 @@ namespace horloge
                     })
                     );
 
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(25);
             }
         }
 

@@ -5,12 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:horloge"
         mc:Ignorable="d"
-        Title="horloge" MouseLeftButtonDown="clockWindow_MouseLeftButtonDown" VerticalAlignment="Top" HorizontalAlignment="Left" Loaded="clockWindow_Loaded" Height="90" WindowStyle="None" ResizeMode="NoResize" Width="186" AllowsTransparency="True" Closing="clockWindow_Closing" Icon="Resources/horlogeIcon.ico" ShowInTaskbar="False">
+        Title="horloge" MouseLeftButtonDown="clockWindow_MouseLeftButtonDown" VerticalAlignment="Top" HorizontalAlignment="Left" Loaded="clockWindow_Loaded" Height="106" WindowStyle="None" ResizeMode="NoResize" Width="186" AllowsTransparency="True" Closing="clockWindow_Closing" Icon="Resources/horlogeIcon.ico" ShowInTaskbar="False">
     <Grid x:Name="clockGrid">
 
         <Label Background="Transparent" x:Name="dataLabel" Content="2016/10/01" HorizontalAlignment="Left" VerticalAlignment="Top"  Padding="0" Margin="0" FontSize="25" Width="186"/>
         <Label Background="Transparent" x:Name="secLabel" Content="50" HorizontalAlignment="Left" Padding="0" FontSize="30" Margin="136,32,0,24" RenderTransformOrigin="-1.325,0.125" Width="46"/>
         <Label Background="Transparent" x:Name="clockLabel" Content="20:50" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="0,0,5,0" FontSize="45" Margin="0,32,0,0" Width="136"/>
+        <Label x:Name="ntpLabel" Content="NTP" HorizontalAlignment="Left" Margin="0,87,0,0" RenderTransformOrigin="0.171,-1.2" Width="27" Padding="0"/>
 
     </Grid>
 </Window>

@@ -316,7 +316,7 @@ namespace horloge
             }
             else
             {
-                confWindow = new NTPconf();
+                confWindow = new NTPconf(window);
                 confWindow.Show();
             }
         }

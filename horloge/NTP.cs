@@ -24,8 +24,16 @@ namespace horloge
             this.port = port;
         }
 
-        public DateTime getTime()
+        public void changeNTP(string serverAddress, int port)
         {
+            this.server = serverAddress;
+            this.port = port;
+        }
+
+        public ntpData getTime()
+        {
+            System.Console.WriteLine("server:{0}", server);
+
             if (server != null)
             {
                 // UDP生成
@@ -38,8 +46,18 @@ namespace horloge
                 // UDP送信
                 Byte[] sdat = new Byte[48];
                 sdat[0] = 0xB;
-                objSck.Send(sdat, sdat.GetLength(0),
-                    server, port);
+
+                try
+                {
+                    objSck.Send(sdat, sdat.GetLength(0),
+                        server, port);
+                }
+                catch (System.Net.Sockets.SocketException)
+                {
+                    ntpData outData = new ntpData(DateTime.Now, 2);
+
+                    return outData;
+                }
 
                 rdat = objSck.Receive(ref ipAny);
 
@@ -73,13 +91,30 @@ namespace horloge
                 // グリニッジ標準時から日本時間への変更
                 dtTime = dtTime.AddHours(9);
 
-                return dtTime;
-            }else
+                Console.WriteLine("getNTP:"+dtTime.ToString("HH:mm:ss"));
+                Console.WriteLine("serverAdd:{0}", server);
+
+                ntpData output = new ntpData(dtTime, 0);
+                return output;
+
+            } else
             {
                 DateTime dtTime = DateTime.Now;
-
-                return dtTime;
+                ntpData output = new ntpData(dtTime, 1);
+                return output;
             }
+        }
+    }
+
+    public struct ntpData
+    {
+        public DateTime dt;
+        public int error;
+
+        public ntpData(DateTime dt_in,int error_in)
+        {
+            dt = dt_in;
+            error = error_in;
         }
     }
 }
