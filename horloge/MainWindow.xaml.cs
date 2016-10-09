@@ -42,7 +42,7 @@ namespace horloge
             this.notifyIcon = new NotifyIconWrapper(this);
 
             time = new timeCount();
-            time.NTP_connection("time.windows.com", 123, 60);
+            //time.NTP_connection("time.windows.com", 123, 60);
 
             loadsetting();
         }
@@ -145,7 +145,7 @@ namespace horloge
             if (time.getEnableNTP() == true)
             {
                 this.Height = clockLabel.Height + dataLabel.Height + ntpLabel.Height;
-                Console.WriteLine("NTPLABEL");
+                //Console.WriteLine("NTPLABEL");
             }
             else
             {
@@ -307,6 +307,7 @@ namespace horloge
 
         private void clockWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            time.saveFile();
             saveClock();
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace horloge
 {
@@ -15,11 +16,11 @@ namespace horloge
         bool enableTick = false;
         bool useNTP = false;
 
-        NTP ntpServer;
+        public NTP ntpServer;
         double ntpIntervalMin; //NTPサーバで時刻を更新する間隔(分)
         DateTime getNTPtime;    //次回NTPサーバで取得する時刻
 
-        int lastget = -1;   //前回の取得の成功・失敗
+        int lastget = 1;   //前回の取得の成功・失敗
 
         public timeCount()
         {
@@ -31,6 +32,9 @@ namespace horloge
 
             enableTick = true;
 
+            getNTPtime = DateTime.Now;
+
+            loadsetting();
             tickTime();
             //checkTime();
         }
@@ -88,17 +92,18 @@ namespace horloge
             }
             else
             {
-                Console.WriteLine("get_envTime");
+                //Console.WriteLine("get_envTime");
                 return DateTime.Now;
             }
         }
 
         //NTP関係
-        public int NTP_connection(string server,int port,double interval)   //エラー処理必要
+        public void NTP_connection(string server,int port,double interval)   //エラー処理必要
         {
             ntpServer = new NTP(server, port);
             ntpIntervalMin = interval;
 
+            /*
             ntpData getDT = ntpServer.getTime();
 
             if (getDT.error == 0)
@@ -116,6 +121,7 @@ namespace horloge
                 lastget = -1;
                 return getDT.error;
             }
+            */
         }
 
         private async void ntpGetTick()
@@ -129,6 +135,7 @@ namespace horloge
                         if(getNTPtime.CompareTo(dt) == -1)
                         {
                             ntpGet();
+                            //Console.WriteLine("ntpGetTick!");
                         }
                     }
 
@@ -146,7 +153,7 @@ namespace horloge
                 if (getDT.error == 0)
                 {
                     setDateTime(getDT.dt);
-                    Console.WriteLine("get{0}", getDT.dt.ToString("hh:mm:ss"));
+                    //Console.WriteLine("get{0}", getDT.dt.ToString("hh:mm:ss"));
                     lastget = 0;
                     return 0;
                 }else
@@ -192,7 +199,7 @@ namespace horloge
 
             //System.Console.WriteLine("server:{0}", ntpServer.server);
 
-            Console.WriteLine("ntpResult:{0}", ntpResult);
+            //Console.WriteLine("ntpResult:{0}", ntpResult);
 
             if (ntpResult == 0)
             {
@@ -204,9 +211,81 @@ namespace horloge
 
         public ntpData lastgetTime()
         {
-            ntpData lasttime = new ntpData(getNTPtime.AddMinutes(-1*ntpIntervalMin), lastget);
+            ntpData lastTime = new ntpData(getNTPtime.AddMinutes(-1 * ntpIntervalMin), lastget);
 
-            return lasttime;
+            return lastTime;
+        }
+
+        //設定ファイル関係
+
+        private void loadsetting()
+        {
+            if (System.IO.File.Exists(@"config/ntp.conf") == true)
+            {
+                saveTimeCount save = loadfile();
+                NTP_connection(save.server,save.port,60);
+                useNTP = save.enableNTP;
+
+                ntpGet();
+                
+            }
+            else
+            {
+                NTP_connection("ntp.nict.jp",123,60);
+                useNTP = false;
+            }
+        }
+
+        private saveTimeCount loadfile()
+        {
+            string filename = @"config/ntp.conf";
+            //＜XMLファイルから読み込む＞
+            //XmlSerializerオブジェクトの作成
+            System.Xml.Serialization.XmlSerializer serializer2 = new System.Xml.Serialization.XmlSerializer(typeof(saveTimeCount));
+            //ファイルを開く
+            System.IO.StreamReader sr = new System.IO.StreamReader(filename, new System.Text.UTF8Encoding(false));
+            //XMLファイルから読み込み、逆シリアル化する
+            saveTimeCount savefile = (saveTimeCount)serializer2.Deserialize(sr);
+            //閉じる
+            sr.Close();
+
+            return savefile;
+        }
+
+        public void saveFile()
+        {
+            saveTimeCount saveData = new saveTimeCount();
+            saveData.save(this);
+
+            string filename = @"config/ntp.conf";
+
+            if (System.IO.File.Exists("config") == false)
+            {
+                System.IO.Directory.CreateDirectory(@"config");
+            }
+
+            XmlSerializer serializer = new XmlSerializer(typeof(saveTimeCount));
+            //ファイルを開く（UTF-8 BOM無し）
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(
+            filename, false, new System.Text.UTF8Encoding(false));
+
+            serializer.Serialize(sw, saveData);
+            //閉じる
+            sw.Close();
+        }
+    }
+
+    public class saveTimeCount
+    {
+        public string server;
+        public int port;
+        public bool enableNTP;
+
+        public void save(timeCount t)
+        {
+            server = t.getServerAddress();
+            port = t.ntpServer.port;
+            enableNTP = t.getEnableNTP();
         }
     }
 }

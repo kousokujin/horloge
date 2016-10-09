@@ -32,7 +32,7 @@ namespace horloge
 
         public ntpData getTime()
         {
-            System.Console.WriteLine("server:{0}", server);
+            //System.Console.WriteLine("server:{0}", server);
 
             if (server != null)
             {
@@ -60,6 +60,7 @@ namespace horloge
                 }
 
                 rdat = objSck.Receive(ref ipAny);
+                Console.WriteLine("rdat{0}", rdat);
 
                 // 1900年1月1日からの経過時間(日時分秒)
                 long lngAllS; // 1900年1月1日からの経過秒数
@@ -67,6 +68,7 @@ namespace horloge
                 long lngH;    // 時
                 long lngM;    // 分
                 long lngS;    // 秒
+                double lngMS;   //ミリ秒
 
                 // 1900年1月1日からの経過秒数
                 lngAllS = (long)(
@@ -81,20 +83,28 @@ namespace horloge
                 lngS = lngS % (60 * 60);         // 残りの秒数
                 lngM = lngS / 60;                // 分
                 lngS = lngS % 60;                // 秒
+                lngMS = rdat[44]+ rdat[45]*Math.Pow(2,(8*(-1)));
 
+                //Console.WriteLine("ミリ秒:{0}ms",lngS);
                 // DateTime型への変換
                 DateTime dtTime = new DateTime(1900, 1, 1);
+
                 dtTime = dtTime.AddDays(lngD);
                 dtTime = dtTime.AddHours(lngH);
                 dtTime = dtTime.AddMinutes(lngM);
                 dtTime = dtTime.AddSeconds(lngS);
+                dtTime = dtTime.AddMilliseconds(lngMS);
+
                 // グリニッジ標準時から日本時間への変更
                 dtTime = dtTime.AddHours(9);
 
-                Console.WriteLine("getNTP:"+dtTime.ToString("HH:mm:ss"));
-                Console.WriteLine("serverAdd:{0}", server);
+                //Console.WriteLine("getNTP:"+dtTime.ToString("HH:mm:ss"));
+                //Console.WriteLine("serverAdd:{0}", server);
 
                 ntpData output = new ntpData(dtTime, 0);
+                //ntpData output = new ntpData(TimeZoneInfo.ConvertTimeFromUtc(now, TimeZoneInfo.Local), 0);
+
+                Console.WriteLine("NTPtime:{0}",dtTime.ToString("HH:mm:ss.fff"));
                 return output;
 
             } else
