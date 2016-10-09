@@ -103,6 +103,7 @@ namespace horloge
             ntpServer = new NTP(server, port);
             ntpIntervalMin = interval;
 
+            ntpGetTick();
             /*
             ntpData getDT = ntpServer.getTime();
 
