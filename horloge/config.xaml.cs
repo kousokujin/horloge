@@ -309,6 +309,7 @@ namespace horloge
             {
                 if (confWindow.Visibility == Visibility.Hidden)
                 {
+                    confWindow.drawWindow();
                     confWindow.Visibility = Visibility.Visible;
                 }
 

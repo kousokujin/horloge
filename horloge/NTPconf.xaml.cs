@@ -32,7 +32,7 @@ namespace horloge
         }
 
 
-        private void drawWindow()
+        public void drawWindow()
         {
             enableNTP = window.time.getEnableNTP();
             ntpServer = window.time.getServerAddress();
