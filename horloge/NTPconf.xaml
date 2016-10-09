@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:horloge"
         mc:Ignorable="d"
-        Title="NTPconf" Height="185.417" Width="395.833" WindowStyle="None" ResizeMode="NoResize"
+        Title="インターネット時刻設定" Height="185.417" Width="395.833" WindowStyle="None" ResizeMode="NoResize"
         BorderBrush="#888888" Background="{StaticResource background_Color}" Icon="Resources/horlogeIcon.ico" BorderThickness="1" Loaded="ntpwindow_Loaded">
 
     <WindowChrome.WindowChrome>
