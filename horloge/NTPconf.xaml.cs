@@ -126,6 +126,8 @@ namespace horloge
             drawWindow();
             window.drawLabel();
 
+            window.time.saveFile();
+
             this.Visibility = Visibility.Hidden;
         }
 

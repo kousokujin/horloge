@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -37,6 +38,16 @@ namespace horloge
         private void MITlink_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("http://opensource.org/licenses/mit-license.php");
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var assm = Assembly.GetExecutingAssembly();
+
+            var name = assm.GetName();
+
+            version.Content = name.Version;
+            //Console.WriteLine("{0} {1}", name.Name, name.Version);
         }
     }
 }

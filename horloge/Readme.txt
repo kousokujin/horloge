@@ -7,5 +7,10 @@ Windows8.1以降
 使い方
 起動すると、時刻が表示されます。フォントの変更などはタスクトレイにあるhorlogeのアイコンから右クリックで表示されるメニューから設定画面を表示することで変更が可能です。
 
+バージョン履歴
+1.0.0.0 初回リリース
+1.1.0.0 NTPサーバに対応
+
+
 このライセンスはMITライセンスで公開されています。
 This software is released under the MIT License, see LICENSE.txt.
