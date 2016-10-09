@@ -13,7 +13,8 @@
 
 ## バージョン履歴
 1.0.0.0 初回リリース  
-1.1.0.0 NTPに対応
+1.1.0.0 NTPに対応　　
+1.1.0.1 NTP関連の修正
 
 ## ダウンロード
 [ダウンロード](https://github.com/kousokujin/horloge/releases)
