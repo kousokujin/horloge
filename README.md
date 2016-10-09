@@ -16,7 +16,7 @@
 1.1.0.0 NTPに対応
 
 ## ダウンロード
-[ダウンロード](https://github.com/kousokujin/horloge/releases/tag/1.0.0.0)
+[ダウンロード](https://github.com/kousokujin/horloge/releases)
 
 ## ライセンス
 Copyright (c) 2016 kousokujin  
