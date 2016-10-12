@@ -198,7 +198,7 @@ namespace horloge
                     })
                     );
 
-                System.Threading.Thread.Sleep(25);
+               System.Threading.Thread.Sleep(25);
             }
         }
 

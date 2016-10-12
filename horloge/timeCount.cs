@@ -45,7 +45,7 @@ namespace horloge
 
                 while (true)
                 {
-                    System.Threading.Thread.Sleep(50);
+                    System.Threading.Thread.Sleep(10);
                     if (enableTick)
                     {
                         sw.Stop();

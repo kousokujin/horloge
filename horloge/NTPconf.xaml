@@ -28,6 +28,10 @@
             <ComboBoxItem Content="time-a.nist.gov"/>
             <ComboBoxItem Content="time-b.nist.gov"/>
             <ComboBoxItem Content="ntp.nict.jp"/>
+            <ComboBoxItem Content="ntp.tut.ac.jp"/>
+            <ComboBoxItem Content="ntp.nc.u-tokyo.ac.jp"/>
+            <ComboBoxItem Content="clock.nc.fukuoka-u.ac.jp"/>
+            <ComboBoxItem Content="clock.tl.fukuoka-u.ac.jp"/>
         </ComboBox>
         <Label x:Name="label" Content="サーバ" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top" Foreground="{StaticResource font_Color}"/>
         <Button x:Name="getTimeButton" Content="今すぐ取得" HorizontalAlignment="Left" Margin="283,68,0,0" VerticalAlignment="Top" Width="75" Style="{StaticResource HoverButtonStyle}" Click="getTimeButton_Click"/>
